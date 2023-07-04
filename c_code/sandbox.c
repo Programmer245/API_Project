@@ -5,11 +5,11 @@
 
 #define HASHTAB_LEN 127 // dimensions of hash table
 
-void aggiungi_stazione(FILE *); // all function prototypes
-void demolisci_stazione(FILE *);
-void aggiungi_auto(FILE *);
-void rottama_auto(FILE *);
-void pianifica_percorso(FILE *);
+void aggiungi_stazione(); // all function prototypes
+void demolisci_stazione();
+void aggiungi_auto();
+void rottama_auto();
+void pianifica_percorso();
 int hash_func(int);
 void best_path(unsigned int *, int);
 
@@ -38,72 +38,49 @@ struct SpecialStation { // used with pianifica_percorso()
 int station_count = 0; // keeps count of number of stations in hash_table
 Station *hash_table[HASHTAB_LEN] = {NULL}; // creates the hash table initialized with null pointers; open hashing
 
+int fscanf_ret; // holds return value for any fscanf calls
+
 int main() {
     char command[20]; // used to store command string when parsing input
 
-    FILE *f;
-    f = fopen("archivio_test_aperti/open_100.txt", "r"); // opens file for reading
-
-    if (f == NULL) { // error occured while opening file
-        printf("Error opening file");
-        exit(0);
-    }
-
-   while (fscanf(f, "%s", command) != EOF) { // starts reading new line 
+    while (fscanf(stdin, "%s", command) != EOF) { // starts reading new line 
         if (strcmp(command, "aggiungi-stazione") == 0) { 
-            printf("i have read aggiungi-stazione\n");
-
-            aggiungi_stazione(f); 
+            aggiungi_stazione(); 
         }
         else if (strcmp(command, "demolisci-stazione") == 0) {
-            printf("i have read demolisci-stazione\n");
-
-	    demolisci_stazione(f);
+	    demolisci_stazione();
         }
         else if (strcmp(command, "aggiungi-auto") == 0) {
-            printf("i have read aggiungi auto\n");
-
-	    aggiungi_auto(f);
+	    aggiungi_auto();
         }
         else if (strcmp(command, "rottama-auto") == 0) {
-            printf("i have read rottama-auto\n");
-
-	    rottama_auto(f);
+	    rottama_auto();
         }
         else if (strcmp(command, "pianifica-percorso") == 0) {
-            printf("i have read pianifica percorso\n");
-
-	    pianifica_percorso(f);
-        }
-        else {
-            printf("unknown command read\n");
-            // return 0;
-        }
-   }
-
-    fclose(f); 
+	    pianifica_percorso();
+	}
+    }
 }
 
-void aggiungi_stazione(FILE *file) {
+void aggiungi_stazione() {
     // creates Station object with malloc, initializes its attributes and adds it to the hash table
     // this function is called after main function reads corresponding command; this function continues reading the rest of the instruction
     
     unsigned int station_dist; 
-    fscanf(file, "%d", &station_dist);
+    fscanf_ret = fscanf(stdin, "%d", &station_dist);
 
     Station *search; // used to check if station is already in hash table
     search = hash_table[hash_func(station_dist)]; 
 
-    printf("We are asked to add station at distance <%d>, with hash value <%d>\n", station_dist, hash_func(station_dist));
-
     while (search != NULL) { // scans hash table chain at given position to see if station object is already in hash table
-        if (search->dist == station_dist) return; // station object is already in hash table
+        if (search->dist == station_dist) {
+	    fprintf(stdout, "non aggiunta\n");
+	    return; // station object is already in hash table
+	}
         else {
             search = search->next; // check next station object in hash table chain
         }
     }
-
-    printf("station object needs to be added\n");
 
     Station *new_station = (Station *)malloc(sizeof(Station)); 
 
@@ -114,13 +91,10 @@ void aggiungi_stazione(FILE *file) {
 
     unsigned int car_autonomia;
     unsigned int car_count;
-    fscanf(file, "%d", &car_count);
-
-    printf("num cars: <%d>\n", car_count);
+    fscanf_ret = fscanf(stdin, "%d", &car_count);
 
     for (unsigned int i=0; i<car_count; i++) { // adds all the cars to the station struct object
-        fscanf(file, "%d", &car_autonomia); // read car autonomia and save it into variable
-        printf("read car <%d>\n", car_autonomia);
+        fscanf_ret = fscanf(stdin, "%d", &car_autonomia); // read car autonomia and save it into variable
         if (car_autonomia > new_station->maximum_autonomia) { // if the car has the highest autonomia yet, maximum autonomia is updated
             new_station->maximum_autonomia = car_autonomia;
         } 
@@ -133,22 +107,28 @@ void aggiungi_stazione(FILE *file) {
     hash_table[hash_func(station_dist)] = new_station;
 
     station_count++; 
+
+    fprintf(stdout, "aggiunta\n");
 }
 
-void demolisci_stazione(FILE *file) {
+void demolisci_stazione() {
     // checks if station is in hash map and deletes it by deallocating memory from heap
 
     unsigned int station_dist; 
-    fscanf(file, "%d", &station_dist);
+    fscanf_ret = fscanf(stdin, "%d", &station_dist);
 
     Station *search; // used to check if station is in hash table
     search = hash_table[hash_func(station_dist)]; 
 
-    if (search == NULL) return; // hash table chain is empty and station object is not in hash table
+    if (search == NULL) {
+	fprintf(stdout, "non demolita\n");
+	return; // hash table chain is empty and station object is not in hash table
+    }
     else if (search->dist == station_dist) { // station object is first element of chain
 	hash_table[hash_func(station_dist)] = search->next;		
 	free(search);
 	station_count--;
+	fprintf(stdout, "demolita\n");
 	return;
     }
     else { // hash table chain is not empty and station object is not first element
@@ -162,6 +142,7 @@ void demolisci_stazione(FILE *file) {
 		search_prev->next = search->next;
 		free(search);
 		station_count--;
+		fprintf(stdout, "demolita\n");
 		return;
 	    }
 	    else {
@@ -169,14 +150,15 @@ void demolisci_stazione(FILE *file) {
 		search = search->next;
 	    }
 	}
+	fprintf(stdout, "non demolita\n");
     }
 }
 
-void aggiungi_auto(FILE *file) {
+void aggiungi_auto() {
     // searches hash table for station object, and if found adds car to station car stack
    
     unsigned int station_dist, car_autonomia; 
-    fscanf(file, "%d %d", &station_dist, &car_autonomia);
+    fscanf_ret = fscanf(stdin, "%d %d", &station_dist, &car_autonomia);
 
     Station *search;
     search = hash_table[hash_func(station_dist)]; 
@@ -189,21 +171,22 @@ void aggiungi_auto(FILE *file) {
 	    search->car_stack[search->stack_pointer] = car_autonomia;
 	    search->stack_pointer = search->stack_pointer + 1;
 
+	    fprintf(stdout, "aggiunta\n");
 	    return;
 	}
 	else {
 	    search = search->next;
 	}
     }
+
+    fprintf(stdout, "non aggiunta\n");
 }
 
-void rottama_auto(FILE *file) {
+void rottama_auto() {
     // searches hash table for station object, and if found removes car from station car stack
-    
-    printf("we in rottama auto\n");
 
     unsigned int station_dist, car_autonomia; 
-    fscanf(file, "%d %d", &station_dist, &car_autonomia);
+    fscanf_ret = fscanf(stdin, "%d %d", &station_dist, &car_autonomia);
 
     Station *search;
     search = hash_table[hash_func(station_dist)]; 
@@ -226,26 +209,30 @@ void rottama_auto(FILE *file) {
 			search->maximum_autonomia = maximum; // update maximum autonomia
 		    }
 
+		    fprintf(stdout, "rottamata\n");
 		    return;
 		}
 		else continue;
 	    }
 	    // car was not present in station
+	    fprintf(stdout, "non rottamata\n");
 	    return;
 	}
 	else {
 	    search = search->next;
 	}
     }
+
+    fprintf(stdout, "non rottamata\n");
 }
 
-void pianifica_percorso(FILE *file) {
+void pianifica_percorso() {
     // calculates and prints the shortest path between 2 given stations
 
     int station_count = 0;
     
     unsigned int station_dist1, station_dist2; 
-    fscanf(file, "%d %d", &station_dist1, &station_dist2);
+    fscanf_ret = fscanf(stdin, "%d %d", &station_dist1, &station_dist2);
 
     Station *search; // used to search hash table
     SpecialStation *head = NULL; // points to double linked list that is created in order to use dijkstra's algorithm
@@ -253,7 +240,7 @@ void pianifica_percorso(FILE *file) {
 
     // build double linked list
     for (int i=0; i<HASHTAB_LEN; i++) { // scan entire hash table
-	search = hash_table[i]; // sets pointer to first object of hash table chain i
+	search = hash_table[i]; // sets pointer to first object of hash table chain 
 	while (search != NULL) { // scan until end of chain
 	    if ((search->dist >= station_dist1 && search->dist <= station_dist2) || (search->dist <= station_dist1 && search->dist >= station_dist2)) { // station object is the start and end stations
 		station_count++;
@@ -297,15 +284,6 @@ void pianifica_percorso(FILE *file) {
 	}
     }
 
-    // debugging purposes
-    temp = head;
-    printf("NULL->");
-    while (temp != NULL) {
-	printf("%d->", temp->dist);
-	temp = temp->next;
-    }
-    printf("NULL\n");
-
     if (station_dist1 < station_dist2) {
 
 	// run dijkstra algorithm on graph
@@ -315,7 +293,7 @@ void pianifica_percorso(FILE *file) {
 	temp = head;
 	while (temp != NULL) {
 	    if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
-		printf("unreachable station\n");
+		fprintf(stdout, "nessun percorso\n");
 		return;
 	    }
 	    
@@ -370,7 +348,7 @@ void pianifica_percorso(FILE *file) {
 	temp = head;
 	while (temp != NULL) {
 	    if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
-		printf("unreachable station\n");
+		fprintf(stdout, "nessun percorso\n");
 		return;
 	    }
 	    
@@ -427,11 +405,14 @@ int hash_func(int val) {
 
 void best_path(unsigned int *stack, int sp) {
     // arguments are stack containing shortest path from end station to start station and stack pointer that points to next available slot
-    // function prints best path
+    // function prints best path both on stdout and on stdout
     
-    printf("optimal path: ");
     for (int i=sp-1; i>=0; i--) {
-	printf("%d->", stack[i]);
+	if (i == 0) {
+	    fprintf(stdout, "%d\n", stack[i]);
+	}
+	else {
+	    fprintf(stdout, "%d ", stack[i]);
+	}
     }
-    printf("end\n");
 }
