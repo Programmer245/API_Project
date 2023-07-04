@@ -41,7 +41,7 @@ int main() {
     char command[20]; // used to store command string when parsing input
 
     FILE *f;
-    f = fopen("archivio_test_aperti/open_1.txt", "r"); // opens file for reading
+    f = fopen("archivio_test_aperti/open_100.txt", "r"); // opens file for reading
 
     if (f == NULL) { // error occured while opening file
         printf("Error opening file");
@@ -257,10 +257,11 @@ void pianifica_percorso(FILE *file) {
     SpecialStation *head = NULL; // points to double linked list that is created in order to use dijkstra's algorithm
     SpecialStation *temp, *temp2; // used to scan double linked list 
 
+    // build double linked list
     for (int i=0; i<HASHTAB_LEN; i++) { // scan entire hash table
 	search = hash_table[i]; // sets pointer to first object of hash table chain i
 	while (search != NULL) { // scan until end of chain
-	    if (search->dist >= station_dist1 && search->dist <= station_dist2) { // station object is within the target stations
+	    if (search->dist >= station_dist1 && search->dist <= station_dist2) { // station object is the start and end stations
 		station_count++;
 
 		SpecialStation *new_node = (SpecialStation *)malloc(sizeof(SpecialStation)); 
@@ -302,8 +303,6 @@ void pianifica_percorso(FILE *file) {
 	}
     }
 
-    // we have finished building the double linked list
-
     // debugging purposes
     temp = head;
     printf("NULL->");
@@ -312,19 +311,20 @@ void pianifica_percorso(FILE *file) {
 	temp = temp->next;
     }
     printf("NULL\n");
-    // debugging purposes
 
-
-
-
+    // run dijkstra algorithm on graph
     head->cost = 0; // initializes first node to cost 0
     head->previous = head->dist;
-
+    
     temp = head;
-    while (temp->next != NULL) {
-	temp2 = temp->next;
+    while (temp != NULL) {
+	if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
+	    printf("unreachable station\n");
+	    return;
+	}
 	
-	while (temp2 != NULL && temp2->dist <= (temp->dist + temp->maximum_autonomia)) { // station pointed by temp2 can be reached from station pointer by temp
+	temp2 = temp->next;
+	while (temp2 != NULL && (temp2->dist <= temp->dist + temp->maximum_autonomia)) {
 	    if ((temp->cost + 1 < temp2->cost) || ((temp->cost + 1 == temp2->cost) && (temp->dist < temp2->previous))) { // found shorter path 
 		temp2->cost = temp->cost + 1;
 		temp2->previous = temp->dist;
@@ -334,27 +334,29 @@ void pianifica_percorso(FILE *file) {
 
 	temp = temp->next;
     }
-    // when while loop is completed, temp will point to last element of double linked list
+    // temp == NULL at end of while loop
 
-    // need to find optimal path
-    int stack_pointer = 0; // points to first free slot in optimal_path stack
-    unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count);
+    temp = head;
+    while (temp->next != NULL) temp = temp->next; // moves temp to last node of double linked list
 
-    while (temp != head) { // scan double linked list backwards to find optimal path by following previous attributes of each node
+    // construct optimal path by moving backwards from final station to starting station
+    int stack_pointer = 0;
+    unsigned int target; // used for finding previous node 
+    unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count); // optimal_path stack to memorize shortest path backwards
+
+    while (temp != NULL) { 
 	optimal_path[stack_pointer] = temp->dist;
 	stack_pointer++;
 
-	temp2 = temp;
-	while (temp2->dist != temp->previous) {
-	    temp2 = temp2->prev;
-	}
-	temp = temp2;
+	target = temp->previous; 
+	do {
+	    temp = temp->prev;
+	} while (temp != NULL && temp->dist != target);
     }
-    optimal_path[stack_pointer] = temp->dist;
-    stack_pointer++;
 
+    // prints optimal path
     printf("optimal path: ");
-    for (int i=stack_pointer-1; i>0; i--) {
+    for (int i=stack_pointer-1; i>=0; i--) {
 	printf("%d->", optimal_path[i]);
     }
     printf("end\n");
