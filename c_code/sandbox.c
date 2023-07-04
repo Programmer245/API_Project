@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define HASHTAB_LEN 127 // dimensions of hash table
 
 void aggiungi_stazione(FILE *); // all function prototypes
-void demolisci_stazione();
-void aggiungi_auto();
-void rottama_auto();
-void pianifica_percorso();
+void demolisci_stazione(FILE *);
+void aggiungi_auto(FILE *);
+void rottama_auto(FILE *);
+void pianifica_percorso(FILE *);
 int hash_func(int);
 
 typedef struct Station Station;
-struct Station {
+struct Station { // used to store info about stations in hash tables
     unsigned int dist; // stores distance of station from start of road
 
     unsigned int car_stack[512]; // array of all available cars at station implemented as stack
@@ -20,6 +21,17 @@ struct Station {
     int stack_pointer; // points to first available position in stack
 
     struct Station *next; // used to point to next station node in hash table
+};
+
+typedef struct SpecialStation SpecialStation;
+struct SpecialStation { // used with pianifica_percorso()
+    unsigned int dist; // distance of station 
+    unsigned int maximum_autonomia; // maximum_autonomia of current 
+    unsigned int cost; // cost of reaching this station (dijkstra)
+    unsigned int previous; // previous station (dijkstra)
+
+    struct SpecialStation *prev;
+    struct SpecialStation *next;
 };
 
 int station_count = 0; // keeps count of number of stations in hash_table
@@ -59,6 +71,8 @@ int main() {
         }
         else if (strcmp(command, "pianifica-percorso") == 0) {
             printf("i have read pianifica percorso\n");
+
+	    pianifica_percorso(f);
         }
         else {
             printf("unknown command read\n");
@@ -185,7 +199,7 @@ void aggiungi_auto(FILE *file) {
 void rottama_auto(FILE *file) {
     // searches hash table for station object, and if found removes car from station car stack
     
-    printf("we in rottama auto");
+    printf("we in rottama auto\n");
 
     unsigned int station_dist, car_autonomia; 
     fscanf(file, "%d %d", &station_dist, &car_autonomia);
@@ -224,11 +238,138 @@ void rottama_auto(FILE *file) {
     }
 }
 
-void pianifica_percorso() {
+void pianifica_percorso(FILE *file) {
+    // calculates and prints the shortest path between 2 given stations
+
+    int station_count = 0;
+    
+    unsigned int station_dist1, station_dist2; 
+    fscanf(file, "%d %d", &station_dist1, &station_dist2);
+
+    // CODE ONLY FOR STATION1 < STATION2
+    
+    if (station_dist1 > station_dist2) {
+	printf("station_dist1 > station_dist2; aborting pianifica persorso\n");
+	return;
+    }
+
+    Station *search; // used to search hash table
+    SpecialStation *head = NULL; // points to double linked list that is created in order to use dijkstra's algorithm
+    SpecialStation *temp, *temp2; // used to scan double linked list 
+
+    for (int i=0; i<HASHTAB_LEN; i++) { // scan entire hash table
+	search = hash_table[i]; // sets pointer to first object of hash table chain i
+	while (search != NULL) { // scan until end of chain
+	    if (search->dist >= station_dist1 && search->dist <= station_dist2) { // station object is within the target stations
+		station_count++;
+
+		SpecialStation *new_node = (SpecialStation *)malloc(sizeof(SpecialStation)); 
+
+		new_node->dist = search->dist;
+		new_node->maximum_autonomia = search->maximum_autonomia;
+		new_node->cost = UINT_MAX;
+		new_node->prev = NULL;
+		new_node->next = NULL;
+
+		if (head == NULL) { // double linked list is empty
+		    head = new_node;
+		}
+		else { // double linked list is not empty
+		    temp = head;
+		    while ((temp->dist < new_node->dist) && (temp->next != NULL)) { // we stop when either temp points to station with bigger dist value, or next node is NULL 
+			temp = temp->next;
+		    }
+		    if (temp->dist < new_node->dist) { // temp->next = NULL; need to insert new node to the right
+			new_node->prev = temp;
+			temp->next = new_node;
+		    }
+		    else { // temp->next != NULL; need to insert new node to the left
+			if (temp->prev == NULL) { // temp points to first node of linked list
+			    new_node->next = temp;
+			    temp->prev = new_node;
+			    head = new_node;
+			}
+			else { 
+			    new_node->next = temp;
+			    new_node->prev = temp->prev;
+			    temp->prev->next = new_node;
+			    temp->prev = new_node;
+			}
+		    }
+		}
+	    }
+	    search = search->next;
+	}
+    }
+
+    // we have finished building the double linked list
+
+    // debugging purposes
+    temp = head;
+    printf("NULL->");
+    while (temp != NULL) {
+	printf("%d->", temp->dist);
+	temp = temp->next;
+    }
+    printf("NULL\n");
+    // debugging purposes
+
+
+
+
+    head->cost = 0; // initializes first node to cost 0
+    head->previous = head->dist;
+
+    temp = head;
+    while (temp->next != NULL) {
+	temp2 = temp->next;
+	
+	while (temp2 != NULL && temp2->dist <= (temp->dist + temp->maximum_autonomia)) { // station pointed by temp2 can be reached from station pointer by temp
+	    if ((temp->cost + 1 < temp2->cost) || ((temp->cost + 1 == temp2->cost) && (temp->dist < temp2->previous))) { // found shorter path 
+		temp2->cost = temp->cost + 1;
+		temp2->previous = temp->dist;
+	    }
+	    temp2 = temp2->next;
+	}
+
+	temp = temp->next;
+    }
+    // when while loop is completed, temp will point to last element of double linked list
+
+    // need to find optimal path
+    int stack_pointer = 0; // points to first free slot in optimal_path stack
+    unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count);
+
+    while (temp != head) { // scan double linked list backwards to find optimal path by following previous attributes of each node
+	optimal_path[stack_pointer] = temp->dist;
+	stack_pointer++;
+
+	temp2 = temp;
+	while (temp2->dist != temp->previous) {
+	    temp2 = temp2->prev;
+	}
+	temp = temp2;
+    }
+    optimal_path[stack_pointer] = temp->dist;
+    stack_pointer++;
+
+    printf("optimal path: ");
+    for (int i=stack_pointer-1; i>0; i--) {
+	printf("%d->", optimal_path[i]);
+    }
+    printf("end\n");
+
+    // deallocate used heap space
+    free(optimal_path);
+    while (head != NULL) {
+	temp = head;
+	head = head->next;
+	free(temp);
+    }
 }
 
 int hash_func(int val) {
-    // takes station distance as input and returns its position in hash table
+    // hash table hash function; takes distance of station as argument and returns position of station object inside hash table
 
     return val % HASHTAB_LEN;
 }
