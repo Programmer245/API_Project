@@ -11,6 +11,7 @@ void aggiungi_auto(FILE *);
 void rottama_auto(FILE *);
 void pianifica_percorso(FILE *);
 int hash_func(int);
+void best_path(unsigned int *, int);
 
 typedef struct Station Station;
 struct Station { // used to store info about stations in hash tables
@@ -246,13 +247,6 @@ void pianifica_percorso(FILE *file) {
     unsigned int station_dist1, station_dist2; 
     fscanf(file, "%d %d", &station_dist1, &station_dist2);
 
-    // CODE ONLY FOR STATION1 < STATION2
-    
-    if (station_dist1 > station_dist2) {
-	printf("station_dist1 > station_dist2; aborting pianifica persorso\n");
-	return;
-    }
-
     Station *search; // used to search hash table
     SpecialStation *head = NULL; // points to double linked list that is created in order to use dijkstra's algorithm
     SpecialStation *temp, *temp2; // used to scan double linked list 
@@ -261,7 +255,7 @@ void pianifica_percorso(FILE *file) {
     for (int i=0; i<HASHTAB_LEN; i++) { // scan entire hash table
 	search = hash_table[i]; // sets pointer to first object of hash table chain i
 	while (search != NULL) { // scan until end of chain
-	    if (search->dist >= station_dist1 && search->dist <= station_dist2) { // station object is the start and end stations
+	    if ((search->dist >= station_dist1 && search->dist <= station_dist2) || (search->dist <= station_dist1 && search->dist >= station_dist2)) { // station object is the start and end stations
 		station_count++;
 
 		SpecialStation *new_node = (SpecialStation *)malloc(sizeof(SpecialStation)); 
@@ -312,66 +306,132 @@ void pianifica_percorso(FILE *file) {
     }
     printf("NULL\n");
 
-    // run dijkstra algorithm on graph
-    head->cost = 0; // initializes first node to cost 0
-    head->previous = head->dist;
-    
-    temp = head;
-    while (temp != NULL) {
-	if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
-	    printf("unreachable station\n");
-	    return;
-	}
+    if (station_dist1 < station_dist2) {
+
+	// run dijkstra algorithm on graph
+	head->cost = 0; // initializes first node to cost 0
+	head->previous = head->dist;
 	
-	temp2 = temp->next;
-	while (temp2 != NULL && (temp2->dist <= temp->dist + temp->maximum_autonomia)) {
-	    if ((temp->cost + 1 < temp2->cost) || ((temp->cost + 1 == temp2->cost) && (temp->dist < temp2->previous))) { // found shorter path 
-		temp2->cost = temp->cost + 1;
-		temp2->previous = temp->dist;
+	temp = head;
+	while (temp != NULL) {
+	    if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
+		printf("unreachable station\n");
+		return;
 	    }
-	    temp2 = temp2->next;
+	    
+	    temp2 = temp->next;
+	    while (temp2 != NULL && (temp2->dist <= temp->dist + temp->maximum_autonomia)) {
+		if ((temp->cost + 1 < temp2->cost) || ((temp->cost + 1 == temp2->cost) && (temp->dist < temp2->previous))) { // found shorter path 
+		    temp2->cost = temp->cost + 1;
+		    temp2->previous = temp->dist;
+		}
+		temp2 = temp2->next;
+	    }
+
+	    temp = temp->next;
+	}
+	// temp == NULL at end of while loop
+
+	temp = head;
+	while (temp->next != NULL) temp = temp->next; // moves temp to last node of double linked list
+
+	// construct optimal path by moving backwards from final station to starting station
+	int stack_pointer = 0;
+	unsigned int target; // used for finding previous node 
+	unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count); // optimal_path stack to memorize shortest path backwards
+
+	while (temp != NULL) { 
+	    optimal_path[stack_pointer] = temp->dist;
+	    stack_pointer++;
+
+	    target = temp->previous; 
+	    do {
+		temp = temp->prev;
+	    } while (temp != NULL && temp->dist != target);
 	}
 
-	temp = temp->next;
+	best_path(optimal_path, stack_pointer);
+
+	// deallocate used heap space
+	free(optimal_path);
+	while (head != NULL) {
+	    temp = head;
+	    head = head->next;
+	    free(temp);
+	}
     }
-    // temp == NULL at end of while loop
+    else { // station1 > station2
 
-    temp = head;
-    while (temp->next != NULL) temp = temp->next; // moves temp to last node of double linked list
-
-    // construct optimal path by moving backwards from final station to starting station
-    int stack_pointer = 0;
-    unsigned int target; // used for finding previous node 
-    unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count); // optimal_path stack to memorize shortest path backwards
-
-    while (temp != NULL) { 
-	optimal_path[stack_pointer] = temp->dist;
-	stack_pointer++;
-
-	target = temp->previous; 
-	do {
-	    temp = temp->prev;
-	} while (temp != NULL && temp->dist != target);
-    }
-
-    // prints optimal path
-    printf("optimal path: ");
-    for (int i=stack_pointer-1; i>=0; i--) {
-	printf("%d->", optimal_path[i]);
-    }
-    printf("end\n");
-
-    // deallocate used heap space
-    free(optimal_path);
-    while (head != NULL) {
+	// run dijkstra algorithm on graph
+	while (head->next != NULL) head = head->next; // head is last element
+	head->cost = 0; // initializes first node to cost 0
+	head->previous = head->dist;
+	
 	temp = head;
-	head = head->next;
-	free(temp);
+	while (temp != NULL) {
+	    if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
+		printf("unreachable station\n");
+		return;
+	    }
+	    
+	    temp2 = temp->prev;
+	    while (temp2 != NULL && (temp2->dist + temp->maximum_autonomia >= temp->dist)) {
+		if ((temp->cost + 1 < temp2->cost) || ((temp->cost + 1 == temp2->cost) && (temp->dist < temp2->previous))) { // found shorter path 
+		    temp2->cost = temp->cost + 1;
+		    temp2->previous = temp->dist;
+		}
+		temp2 = temp2->prev;
+	    }
+
+	    temp = temp->prev;
+	}
+	// temp == NULL at end of while loop
+
+	temp = head;
+	while (temp->prev != NULL) temp = temp->prev; // moves temp to last node of double linked list
+	
+	// construct optimal path by moving backwards from final station to starting station
+	int stack_pointer = 0;
+	unsigned int target; // used for finding previous node 
+	unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count); // optimal_path stack to memorize shortest path backwards
+
+	while (temp != NULL) { 
+	    optimal_path[stack_pointer] = temp->dist;
+	    stack_pointer++;
+
+	    target = temp->previous; 
+	    do {
+		temp = temp->next;
+	    } while (temp != NULL && temp->dist != target);
+	}
+
+	best_path(optimal_path, stack_pointer);
+
+	// deallocate used heap space
+	free(optimal_path);
+	while (head != NULL) {
+	    temp = head;
+	    head = head->prev;
+	    free(temp);
+	}
     }
 }
+
+// support functions
 
 int hash_func(int val) {
     // hash table hash function; takes distance of station as argument and returns position of station object inside hash table
 
     return val % HASHTAB_LEN;
+}
+
+void best_path(unsigned int *stack, int sp) {
+    // arguments are stack containing shortest path from end station to start station and stack pointer that points to next available slot
+    // function prints best path
+    
+    printf("optimal path: ");
+    for (int i=sp-1; i>=0; i--) {
+	printf("%d->", stack[i]);
+    }
+    printf("end\n");
 }
