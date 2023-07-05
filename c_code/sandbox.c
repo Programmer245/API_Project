@@ -5,14 +5,6 @@
 
 #define HASHTAB_LEN 127 // dimensions of hash table
 
-void aggiungi_stazione(); // all function prototypes
-void demolisci_stazione();
-void aggiungi_auto();
-void rottama_auto();
-void pianifica_percorso();
-int hash_func(int);
-void best_path(unsigned int *, int);
-
 typedef struct Station Station;
 struct Station { // used to store info about stations in hash tables
     unsigned int dist; // stores distance of station from start of road
@@ -35,6 +27,14 @@ struct SpecialStation { // used with pianifica_percorso()
     struct SpecialStation *next;
 };
 
+void aggiungi_stazione(); // all function prototypes
+void demolisci_stazione();
+void aggiungi_auto();
+void rottama_auto();
+void pianifica_percorso();
+int hash_func(int);
+void best_path(unsigned int *, int);
+SpecialStation * construct_double_list(unsigned int, unsigned int, int *);
 int station_count = 0; // keeps count of number of stations in hash_table
 Station *hash_table[HASHTAB_LEN] = {NULL}; // creates the hash table initialized with null pointers; open hashing
 
@@ -234,55 +234,8 @@ void pianifica_percorso() {
     unsigned int station_dist1, station_dist2; 
     fscanf_ret = fscanf(stdin, "%d %d", &station_dist1, &station_dist2);
 
-    Station *search; // used to search hash table
-    SpecialStation *head = NULL; // points to double linked list that is created in order to use dijkstra's algorithm
-    SpecialStation *temp, *temp2; // used to scan double linked list 
-
-    // build double linked list
-    for (int i=0; i<HASHTAB_LEN; i++) { // scan entire hash table
-	search = hash_table[i]; // sets pointer to first object of hash table chain 
-	while (search != NULL) { // scan until end of chain
-	    if ((search->dist >= station_dist1 && search->dist <= station_dist2) || (search->dist <= station_dist1 && search->dist >= station_dist2)) { // station object is the start and end stations
-		station_count++;
-
-		SpecialStation *new_node = (SpecialStation *)malloc(sizeof(SpecialStation)); 
-
-		new_node->dist = search->dist;
-		new_node->maximum_autonomia = search->maximum_autonomia;
-		new_node->cost = UINT_MAX;
-		new_node->prev = NULL;
-		new_node->next = NULL;
-
-		if (head == NULL) { // double linked list is empty
-		    head = new_node;
-		}
-		else { // double linked list is not empty
-		    temp = head;
-		    while ((temp->dist < new_node->dist) && (temp->next != NULL)) { // we stop when either temp points to station with bigger dist value, or next node is NULL 
-			temp = temp->next;
-		    }
-		    if (temp->dist < new_node->dist) { // temp->next = NULL; need to insert new node to the right
-			new_node->prev = temp;
-			temp->next = new_node;
-		    }
-		    else { // temp->next != NULL; need to insert new node to the left
-			if (temp->prev == NULL) { // temp points to first node of linked list
-			    new_node->next = temp;
-			    temp->prev = new_node;
-			    head = new_node;
-			}
-			else { 
-			    new_node->next = temp;
-			    new_node->prev = temp->prev;
-			    temp->prev->next = new_node;
-			    temp->prev = new_node;
-			}
-		    }
-		}
-	    }
-	    search = search->next;
-	}
-    }
+    SpecialStation *head = construct_double_list(station_dist1, station_dist2, &station_count); // points to double linked list that is created in order to use dijkstra's algorithm
+    SpecialStation *temp, *temp2;
 
     if (station_dist1 < station_dist2) {
 
@@ -401,6 +354,60 @@ int hash_func(int val) {
     // hash table hash function; takes distance of station as argument and returns position of station object inside hash table
 
     return val % HASHTAB_LEN;
+}
+
+SpecialStation * construct_double_list(unsigned int station_dist1, unsigned int station_dist2, int *station_count) {
+    // support function for pianifica_percorso that construct the needed double linked list containing all station nodes between start station and end station in order
+    
+    Station *search; // used to search hash table
+    SpecialStation *head = NULL;
+    SpecialStation *temp; // used to scan double linked list 
+
+    for (int i=0; i<HASHTAB_LEN; i++) { // scan entire hash table
+	search = hash_table[i]; // sets pointer to first object of hash table chain 
+	while (search != NULL) { // scan until end of chain
+	    if ((search->dist >= station_dist1 && search->dist <= station_dist2) || (search->dist <= station_dist1 && search->dist >= station_dist2)) { // station object is the start and end stations
+		(*station_count)++;
+
+		SpecialStation *new_node = (SpecialStation *)malloc(sizeof(SpecialStation)); 
+
+		new_node->dist = search->dist;
+		new_node->maximum_autonomia = search->maximum_autonomia;
+		new_node->cost = UINT_MAX;
+		new_node->prev = NULL;
+		new_node->next = NULL;
+
+		if (head == NULL) { // double linked list is empty
+		    head = new_node;
+		}
+		else { // double linked list is not empty
+		    temp = head;
+		    while ((temp->dist < new_node->dist) && (temp->next != NULL)) { // we stop when either temp points to station with bigger dist value, or next node is NULL 
+			temp = temp->next;
+		    }
+		    if (temp->dist < new_node->dist) { // temp->next = NULL; need to insert new node to the right
+			new_node->prev = temp;
+			temp->next = new_node;
+		    }
+		    else { // temp->next != NULL; need to insert new node to the left
+			if (temp->prev == NULL) { // temp points to first node of linked list
+			    new_node->next = temp;
+			    temp->prev = new_node;
+			    head = new_node;
+			}
+			else { 
+			    new_node->next = temp;
+			    new_node->prev = temp->prev;
+			    temp->prev->next = new_node;
+			    temp->prev = new_node;
+			}
+		    }
+		}
+	    }
+	    search = search->next;
+	}
+    }
+    return head;
 }
 
 void best_path(unsigned int *stack, int sp) {
