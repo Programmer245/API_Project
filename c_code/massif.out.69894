@@ -1,0 +1,669 @@
+desc: (none)
+cmd: ./sandbox
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=996819783
+mem_heap_B=9988624
+mem_heap_extra_B=86528
+mem_stacks_B=0
+heap_tree=detailed
+n2: 9988624 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 9941456 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 9941456 0x10926C: main (sandbox.c:48)
+ n0: 47168 in 4 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=2
+#-----------
+time=1789440555
+mem_heap_B=14082064
+mem_heap_extra_B=158856
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=2497371081
+mem_heap_B=21941992
+mem_heap_extra_B=178832
+mem_stacks_B=0
+heap_tree=detailed
+n2: 21941992 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 21894824 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 21894824 0x10926C: main (sandbox.c:48)
+ n0: 47168 in 4 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=4
+#-----------
+time=3364906805
+mem_heap_B=25216288
+mem_heap_extra_B=277136
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=4025069238
+mem_heap_B=27078640
+mem_heap_extra_B=314920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=4916154901
+mem_heap_B=27668512
+mem_heap_extra_B=302752
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=5544575215
+mem_heap_B=29842528
+mem_heap_extra_B=239840
+mem_stacks_B=0
+heap_tree=detailed
+n2: 29842528 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 29795360 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 29795360 0x10926C: main (sandbox.c:48)
+ n0: 47168 in 4 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=8
+#-----------
+time=6558103828
+mem_heap_B=30352916
+mem_heap_extra_B=337716
+mem_stacks_B=0
+heap_tree=detailed
+n3: 30352916 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 29867880 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 29867880 0x10926C: main (sandbox.c:48)
+ n1: 428192 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 428192 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 428192 0x109307: main (sandbox.c:60)
+ n0: 56844 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=9
+#-----------
+time=7465231999
+mem_heap_B=35205480
+mem_heap_extra_B=374272
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=8162818694
+mem_heap_B=35402720
+mem_heap_extra_B=356816
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=9137580390
+mem_heap_B=35636076
+mem_heap_extra_B=400196
+mem_stacks_B=0
+heap_tree=detailed
+n3: 35636076 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 35049952 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 35049952 0x10926C: main (sandbox.c:48)
+ n1: 518048 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 518048 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 518048 0x109307: main (sandbox.c:60)
+ n0: 68076 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=12
+#-----------
+time=9824488592
+mem_heap_B=37551136
+mem_heap_extra_B=395936
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=10270152828
+mem_heap_B=37700576
+mem_heap_extra_B=433296
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=11181656446
+mem_heap_B=37780132
+mem_heap_extra_B=435772
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=11918338301
+mem_heap_B=39084856
+mem_heap_extra_B=415416
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=12864969616
+mem_heap_B=41451752
+mem_heap_extra_B=407752
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=13310775955
+mem_heap_B=41624488
+mem_heap_extra_B=450936
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=14001018489
+mem_heap_B=41696252
+mem_heap_extra_B=453132
+mem_stacks_B=0
+heap_tree=detailed
+n3: 41696252 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 41081544 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 41081544 0x10926C: main (sandbox.c:48)
+ n1: 543456 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 543456 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 543456 0x109307: main (sandbox.c:60)
+ n0: 71252 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=19
+#-----------
+time=14575392806
+mem_heap_B=44430648
+mem_heap_extra_B=428592
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=15482857857
+mem_heap_B=44736376
+mem_heap_extra_B=505024
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=16478462097
+mem_heap_B=44828076
+mem_heap_extra_B=508204
+mem_stacks_B=0
+heap_tree=detailed
+n3: 44828076 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 44069368 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 44069368 0x10926C: main (sandbox.c:48)
+ n1: 671456 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 671456 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 671456 0x109307: main (sandbox.c:60)
+ n0: 87252 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=22
+#-----------
+time=16951001802
+mem_heap_B=46533392
+mem_heap_extra_B=439728
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=17858262717
+mem_heap_B=46848560
+mem_heap_extra_B=518520
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=19242709025
+mem_heap_B=46948672
+mem_heap_extra_B=523880
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=19704698156
+mem_heap_B=48698752
+mem_heap_extra_B=455976
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=20309498279
+mem_heap_B=48929056
+mem_heap_extra_B=513552
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=20763305369
+mem_heap_B=49052320
+mem_heap_extra_B=544368
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=22083309189
+mem_heap_B=49171100
+mem_heap_extra_B=552868
+mem_stacks_B=0
+heap_tree=detailed
+n3: 49171100 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 48360480 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 48360480 0x10926C: main (sandbox.c:48)
+ n1: 717600 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 717600 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 717600 0x109307: main (sandbox.c:60)
+ n0: 93020 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=29
+#-----------
+time=23024524673
+mem_heap_B=51200872
+mem_heap_extra_B=519768
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=24582930001
+mem_heap_B=51296564
+mem_heap_extra_B=527860
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=24998331280
+mem_heap_B=52482376
+mem_heap_extra_B=486736
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=25603223843
+mem_heap_B=52709096
+mem_heap_extra_B=543416
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=26055624653
+mem_heap_B=52831208
+mem_heap_extra_B=573944
+mem_stacks_B=0
+heap_tree=detailed
+n3: 52831208 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 52137736 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 52137736 0x10926C: main (sandbox.c:48)
+ n1: 685280 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 685280 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 685280 0x109307: main (sandbox.c:60)
+ n0: 8192 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=34
+#-----------
+time=27751441731
+mem_heap_B=52929996
+mem_heap_extra_B=577964
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=28429862124
+mem_heap_B=53290456
+mem_heap_extra_B=527112
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=28881892485
+mem_heap_B=53430776
+mem_heap_extra_B=562192
+mem_stacks_B=0
+heap_tree=detailed
+n3: 53430776 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 52804920 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 52804920 0x10926C: main (sandbox.c:48)
+ n1: 617664 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 617664 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 617664 0x109307: main (sandbox.c:60)
+ n0: 8192 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=37
+#-----------
+time=29927580778
+mem_heap_B=53528600
+mem_heap_extra_B=567864
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=30493105976
+mem_heap_B=53677216
+mem_heap_extra_B=521896
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=31397553065
+mem_heap_B=53941216
+mem_heap_extra_B=587896
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=32476601098
+mem_heap_B=54053688
+mem_heap_extra_B=594336
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=32816032557
+mem_heap_B=54817784
+mem_heap_extra_B=495296
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=33494426622
+mem_heap_B=55087096
+mem_heap_extra_B=562624
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=34059983404
+mem_heap_B=55235192
+mem_heap_extra_B=599648
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=35618430878
+mem_heap_B=55331904
+mem_heap_extra_B=602384
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=36592518291
+mem_heap_B=56429144
+mem_heap_extra_B=570832
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=37395198801
+mem_heap_B=56633560
+mem_heap_extra_B=621936
+mem_stacks_B=0
+heap_tree=detailed
+n3: 56633560 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 55863192 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 55863192 0x10926C: main (sandbox.c:48)
+ n1: 762176 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 762176 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 762176 0x109307: main (sandbox.c:60)
+ n0: 8192 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=47
+#-----------
+time=39243761222
+mem_heap_B=56723960
+mem_heap_extra_B=621944
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=39382969589
+mem_heap_B=57466432
+mem_heap_extra_B=453152
+mem_stacks_B=0
+heap_tree=detailed
+n2: 57466432 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57419264 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 57419264 0x10926C: main (sandbox.c:48)
+ n0: 47168 in 4 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=49
+#-----------
+time=39384879106
+mem_heap_B=57489224
+mem_heap_extra_B=453328
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=39524100356
+mem_heap_B=58191368
+mem_heap_extra_B=500352
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=39663320087
+mem_heap_B=58290632
+mem_heap_extra_B=525168
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=39802592230
+mem_heap_B=58361736
+mem_heap_extra_B=542944
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=39941824411
+mem_heap_B=58420424
+mem_heap_extra_B=557616
+mem_stacks_B=0
+heap_tree=detailed
+n2: 58420424 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57972488 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 57972488 0x10926C: main (sandbox.c:48)
+ n0: 447936 in 4 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=54
+#-----------
+time=40081122090
+mem_heap_B=58470440
+mem_heap_extra_B=570120
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=40220398510
+mem_heap_B=58514312
+mem_heap_extra_B=581088
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=40359640041
+mem_heap_B=58555944
+mem_heap_extra_B=591496
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=40498894584
+mem_heap_B=58595592
+mem_heap_extra_B=601408
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=58
+#-----------
+time=40638257937
+mem_heap_B=58632840
+mem_heap_extra_B=610720
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=59
+#-----------
+time=40777587080
+mem_heap_B=58667848
+mem_heap_extra_B=619472
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=60
+#-----------
+time=40917005819
+mem_heap_B=58700808
+mem_heap_extra_B=627712
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=61
+#-----------
+time=41056286300
+mem_heap_B=58732040
+mem_heap_extra_B=635520
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=62
+#-----------
+time=41195725577
+mem_heap_B=58762504
+mem_heap_extra_B=643136
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=42332220357
+mem_heap_B=58861444
+mem_heap_extra_B=644500
+mem_stacks_B=0
+heap_tree=detailed
+n3: 58861444 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57972488 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 57972488 0x10926C: main (sandbox.c:48)
+ n1: 787232 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 787232 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 787232 0x109307: main (sandbox.c:60)
+ n0: 101724 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=64
+#-----------
+time=42332461204
+mem_heap_B=58861444
+mem_heap_extra_B=644500
+mem_stacks_B=0
+heap_tree=peak
+n3: 58861444 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57972488 0x10940A: aggiungi_stazione (sandbox.c:85)
+  n0: 57972488 0x10926C: main (sandbox.c:48)
+ n1: 787232 0x109FFD: construct_double_list (sandbox.c:372)
+  n1: 787232 0x109B2E: pianifica_percorso (sandbox.c:237)
+   n0: 787232 0x109307: main (sandbox.c:60)
+ n0: 101724 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=65
+#-----------
+time=42471674150
+mem_heap_B=58647216
+mem_heap_extra_B=506384
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=66
+#-----------
+time=42610947564
+mem_heap_B=58743344
+mem_heap_extra_B=530416
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=67
+#-----------
+time=42750272289
+mem_heap_B=58812112
+mem_heap_extra_B=547608
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=68
+#-----------
+time=42889528051
+mem_heap_B=58870864
+mem_heap_extra_B=562296
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=69
+#-----------
+time=43028836123
+mem_heap_B=58920944
+mem_heap_extra_B=574816
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=70
+#-----------
+time=43168115000
+mem_heap_B=58966800
+mem_heap_extra_B=586280
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=71
+#-----------
+time=44982495232
+mem_heap_B=59038076
+mem_heap_extra_B=588196
+mem_stacks_B=0
+heap_tree=empty

@@ -1,3 +1,4 @@
 *.exe
 sandbox
-sandbox2
+shortest_path
+out_text.txt
