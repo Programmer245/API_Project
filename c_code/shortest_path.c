@@ -5,7 +5,7 @@
 
 #define HASHTAB_LEN 127 // dimensions of hash table
 
-typedef struct Station Station;
+typedef struct Station Station; // used to store informations about stations in open hashing hash table
 struct Station { // used to store info about stations in hash tables
     unsigned int dist; // stores distance of station from start of road
 
@@ -16,15 +16,20 @@ struct Station { // used to store info about stations in hash tables
     struct Station *next; // used to point to next station node in hash table
 };
 
-typedef struct SpecialStation SpecialStation;
-struct SpecialStation { // used with pianifica_percorso()
-    unsigned int dist; // distance of station 
-    unsigned int maximum_autonomia; // maximum_autonomia of current 
-    unsigned int cost; // cost of reaching this station (dijkstra)
-    unsigned int previous; // previous station (dijkstra)
+typedef struct TreeNode TreeNode; // used in pianifica_percorso to build shortest path tree
+struct TreeNode {
+    unsigned int dist;
+    int child_count; // number of children 
 
-    struct SpecialStation *prev;
-    struct SpecialStation *next;
+    struct TreeNode *father; // pointer to father node
+    struct TreeNode **children_arr; // pointer to array of addresses of children nodes
+};
+
+typedef struct QueueNode QueueNode; // used in pianifica_percorso to keep track of next TreeNode object to process
+struct QueueNode {
+    TreeNode *node;
+
+    struct QueueNode *next; // points to next QueueNode element in queue
 };
 
 void aggiungi_stazione(); // all function prototypes
@@ -32,9 +37,20 @@ void demolisci_stazione();
 void aggiungi_auto();
 void rottama_auto();
 void pianifica_percorso();
-int hash_func(int);
-void best_path(unsigned int *, int);
-SpecialStation * construct_double_list(unsigned int, unsigned int, int *);
+void pianifica_forwards();
+void pianifica_backwards();
+int hash_func(int); 
+int fill_stations_array(unsigned int *, unsigned int, unsigned int); 
+int compare_ascending(const void *, const void *);
+int compare_descending(const void *, const void *);
+void queue_add(QueueNode **, QueueNode **, TreeNode *);
+TreeNode * queue_pop(QueueNode **, QueueNode **);
+TreeNode * new_treenode(unsigned int);
+int mod_bin_search_forwards(unsigned int *, int, unsigned int);
+int mod_bin_search_backwards(unsigned int *, int, unsigned int);
+void free_tree(TreeNode *);
+void free_queue(QueueNode *);
+
 int station_count = 0; // keeps count of number of stations in hash_table
 Station *hash_table[HASHTAB_LEN] = {NULL}; // creates the hash table initialized with null pointers; open hashing
 
@@ -227,128 +243,192 @@ void rottama_auto() {
 }
 
 void pianifica_percorso() {
-    // calculates and prints the shortest path between 2 given stations
-
-    int station_count = 0;
-    
     unsigned int station_dist1, station_dist2; 
     fscanf_ret = fscanf(stdin, "%d %d", &station_dist1, &station_dist2);
 
-    SpecialStation *head = construct_double_list(station_dist1, station_dist2, &station_count); // points to double linked list that is created in order to use dijkstra's algorithm
-    SpecialStation *temp, *temp2;
-
     if (station_dist1 < station_dist2) {
-
-	// run dijkstra algorithm on graph
-	head->cost = 0; // initializes first node to cost 0
-	head->previous = head->dist;
-	
-	temp = head;
-	while (temp != NULL) {
-	    if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
-		fprintf(stdout, "nessun percorso\n");
-		return;
-	    }
-	    
-	    temp2 = temp->next;
-	    while (temp2 != NULL && (temp2->dist <= temp->dist + temp->maximum_autonomia)) {
-		if ((temp->cost + 1 < temp2->cost) || ((temp->cost + 1 == temp2->cost) && (temp->dist < temp2->previous))) { // found shorter path 
-		    temp2->cost = temp->cost + 1;
-		    temp2->previous = temp->dist;
-		}
-		temp2 = temp2->next;
-	    }
-
-	    temp = temp->next;
-	}
-	// temp == NULL at end of while loop
-
-	temp = head;
-	while (temp->next != NULL) temp = temp->next; // moves temp to last node of double linked list
-
-	// construct optimal path by moving backwards from final station to starting station
-	int stack_pointer = 0;
-	unsigned int target; // used for finding previous node 
-	unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count); // optimal_path stack to memorize shortest path backwards
-
-	while (temp != NULL) { 
-	    optimal_path[stack_pointer] = temp->dist;
-	    stack_pointer++;
-
-	    target = temp->previous; 
-	    do {
-		temp = temp->prev;
-	    } while (temp != NULL && temp->dist != target);
-	}
-
-	best_path(optimal_path, stack_pointer);
-
-	// deallocate used heap space
-	free(optimal_path);
-	while (head != NULL) {
-	    temp = head;
-	    head = head->next;
-	    free(temp);
-	}
+	pianifica_forwards(station_dist1, station_dist2);
     }
-    else { // station1 > station2
-
-	// run dijkstra algorithm on graph
-	while (head->next != NULL) head = head->next; // head is last element
-	head->cost = 0; // initializes first node to cost 0
-	head->previous = head->dist;
-	
-	temp = head;
-	while (temp != NULL) {
-	    if (temp->cost == UINT_MAX) { // we have found an unreachable station; final station cannot be reached from starting station
-		fprintf(stdout, "nessun percorso\n");
-		return;
-	    }
-	    
-	    temp2 = temp->prev;
-	    while (temp2 != NULL && (temp2->dist + temp->maximum_autonomia >= temp->dist)) {
-		if ((temp->cost + 1 < temp2->cost) || ((temp->cost + 1 == temp2->cost) && (temp->dist < temp2->previous))) { // found shorter path 
-		    temp2->cost = temp->cost + 1;
-		    temp2->previous = temp->dist;
-		}
-		temp2 = temp2->prev;
-	    }
-
-	    temp = temp->prev;
-	}
-	// temp == NULL at end of while loop
-
-	temp = head;
-	while (temp->prev != NULL) temp = temp->prev; // moves temp to last node of double linked list
-	
-	// construct optimal path by moving backwards from final station to starting station
-	int stack_pointer = 0;
-	unsigned int target; // used for finding previous node 
-	unsigned int *optimal_path = (unsigned int*)malloc(sizeof(unsigned int)*station_count); // optimal_path stack to memorize shortest path backwards
-
-	while (temp != NULL) { 
-	    optimal_path[stack_pointer] = temp->dist;
-	    stack_pointer++;
-
-	    target = temp->previous; 
-	    do {
-		temp = temp->next;
-	    } while (temp != NULL && temp->dist != target);
-	}
-
-	best_path(optimal_path, stack_pointer);
-
-	// deallocate used heap space
-	free(optimal_path);
-	while (head != NULL) {
-	    temp = head;
-	    head = head->prev;
-	    free(temp);
-	}
+    else {
+	pianifica_backwards(station_dist1, station_dist2);
     }
 }
 
-// support functions
+void pianifica_forwards(unsigned int station_dist1, unsigned int station_dist2) {
+    // called by pianifica_percorso when starting station is closer to road start than destination station
+
+    unsigned int *distances = (unsigned int *)malloc(sizeof(unsigned int)*station_count); // create array to hold all station distances
+    int count = fill_stations_array(distances, station_dist1, station_dist2); // populate array
+    qsort(distances, count, sizeof(unsigned int), compare_ascending); // sort array with quicksort in ascending order
+    
+    QueueNode *queue_head, *queue_tail; // queue that holds addresses of TreeNode objects to process
+    queue_head = queue_tail = NULL;
+
+    TreeNode *root = new_treenode(distances[0]); // root node of entire tree
+    queue_add(&queue_head, &queue_tail, root);
+
+    Station *search; // used to search in hash table
+    TreeNode *curr; // points to TreeNode object being processed
+    TreeNode *child; // used to temporariliy store address of child node
+    unsigned int max_reach; // stores maximum distance reachable from station
+    int furthest_idx; // stores the index of the biggest element smaller than max_reach in distances array
+    int lim_idx = 0; // stores the index of the element with biggest dist parameter in tree
+    while (queue_head != NULL) { // while the queue is full
+	curr = queue_pop(&queue_head, &queue_tail);
+
+	search = hash_table[hash_func(curr->dist)]; 
+	while (search->dist != curr->dist) { // find station object in hash table
+	    search = search->next;
+	}
+
+	max_reach = curr->dist + search->maximum_autonomia;
+	furthest_idx = mod_bin_search_forwards(distances, count, max_reach);	
+
+	if (furthest_idx == count-1) { // found shortest path to destination station
+	    // calculate optimal path
+	    unsigned int *stack = malloc(sizeof(unsigned int)*count); // optimal path stack
+	    int sp = 0;
+
+	    stack[sp] = station_dist2;
+	    sp++;
+
+	    TreeNode *scanner = curr; // used to scan tree structure for best path
+	    while (scanner != NULL) {
+		stack[sp] = scanner->dist;
+		sp++;
+		scanner = scanner->father;
+	    }
+
+	    for (int j=sp-1; j>=0; j--) {
+		if (j == 0) { // last element
+		    fprintf(stdout, "%d\n", stack[j]);
+		}
+		else { // not last element 
+		    fprintf(stdout, "%d ", stack[j]);
+		}
+	    }
+
+	    free(distances);
+	    free(stack);
+	    free_tree(root);
+	    free_queue(queue_head);
+
+	    return; // exits function
+	}
+	else if (furthest_idx <= lim_idx) { // current node will not have children
+	    continue;
+	}
+	else { // node will have children 
+	    curr->child_count = furthest_idx - lim_idx;
+	    curr->children_arr = (TreeNode **)malloc(sizeof(TreeNode *)*curr->child_count); // allocate array of pointers to children nodes
+
+	    for (int i=lim_idx+1; i<=furthest_idx; i++) { // add children nodes
+		child = new_treenode(distances[i]);
+		child->father = curr;
+
+		curr->children_arr[i-lim_idx-1] = child; // add child node to father node array
+		queue_add(&queue_head, &queue_tail, child); // add child node to queue
+	    }
+
+	    lim_idx = furthest_idx;
+	}
+    }
+    // there is no path between the 2 selected stations
+
+    free(distances);
+    free_tree(root);
+
+    fprintf(stdout, "nessun percorso\n");
+}
+
+void pianifica_backwards(unsigned int station_dist1, unsigned int station_dist2) {
+    // called by pianifica_percorso when starting station is further away from road start than destination station
+    
+    unsigned int *distances = (unsigned int *)malloc(sizeof(unsigned int)*station_count); // create array to hold all station distances
+    int count = fill_stations_array(distances, station_dist2, station_dist1); // populate array
+    qsort(distances, count, sizeof(unsigned int), compare_descending); // sort array with quicksort in descending order
+    
+    QueueNode *queue_head, *queue_tail; // queue that holds addresses of TreeNode objects to process
+    queue_head = queue_tail = NULL;
+
+    TreeNode *root = new_treenode(distances[0]); // root node of entire tree
+    queue_add(&queue_head, &queue_tail, root);
+
+    Station *search; // used to search in hash table
+    TreeNode *curr; // points to TreeNode object being processed
+    TreeNode *child; // used to temporariliy store address of child node
+    unsigned int max_reach; // stores maximum distance reachable from station
+    int furthest_idx; // stores the index of the biggest element smaller than max_reach in distances array
+    int lim_idx = 0; // stores the index of the element with biggest dist parameter in tree
+    while (queue_head != NULL) { // while the queue is full
+	curr = queue_pop(&queue_head, &queue_tail);
+
+	search = hash_table[hash_func(curr->dist)]; 
+	while (search->dist != curr->dist) { // find station object in hash table
+	    search = search->next;
+	}
+
+	max_reach = curr->dist > search->maximum_autonomia ? curr->dist - search->maximum_autonomia : 0;
+	furthest_idx = mod_bin_search_backwards(distances, count, max_reach);	
+
+	if (furthest_idx == count-1) { // found shortest path to destination station
+	    // calculate optimal path
+	    unsigned int *stack = malloc(sizeof(unsigned int)*count); // optimal path stack
+	    int sp = 0;
+
+	    stack[sp] = station_dist2;
+	    sp++;
+
+	    TreeNode *scanner = curr; // used to scan tree structure for best path
+	    while (scanner != NULL) {
+		stack[sp] = scanner->dist;
+		sp++;
+		scanner = scanner->father;
+	    }
+
+	    for (int j=sp-1; j>=0; j--) {
+		if (j == 0) { // last element
+		    fprintf(stdout, "%d\n", stack[j]);
+		}
+		else { // not last element 
+		    fprintf(stdout, "%d ", stack[j]);
+		}
+	    }
+
+	    free(distances);
+	    free(stack);
+	    free_tree(root);
+	    free_queue(queue_head);
+
+	    return; // exits function
+	}
+	else if (furthest_idx <= lim_idx) { // current node will not have children
+	    continue;
+	}
+	else { // node will have children 
+	    curr->child_count = furthest_idx - lim_idx;
+	    curr->children_arr = (TreeNode **)malloc(sizeof(TreeNode *)*curr->child_count); // allocate array of pointers to children nodes
+
+	    for (int i=furthest_idx; i>lim_idx; i--) { // add children nodes
+		child = new_treenode(distances[i]);
+		child->father = curr;
+
+		curr->children_arr[i-lim_idx-1] = child; // add child node to father node array
+		queue_add(&queue_head, &queue_tail, child); // add child node to queue
+	    }
+
+	    lim_idx = furthest_idx;
+	}
+    }
+    // there is no path between the 2 selected stations
+
+    free(distances);
+    free_tree(root);
+
+    fprintf(stdout, "nessun percorso\n");
+}
+
+////////////////////////////////////////////////////////////////////////// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////////
 
 int hash_func(int val) {
     // hash table hash function; takes distance of station as argument and returns position of station object inside hash table
@@ -356,70 +436,161 @@ int hash_func(int val) {
     return val % HASHTAB_LEN;
 }
 
-SpecialStation * construct_double_list(unsigned int station_dist1, unsigned int station_dist2, int *station_count) {
-    // support function for pianifica_percorso that construct the needed double linked list containing all station nodes between start station and end station in order
-    
-    Station *search; // used to search hash table
-    SpecialStation *head = NULL;
-    SpecialStation *temp; // used to scan double linked list 
+int fill_stations_array(unsigned int *arr, unsigned int station_dist1, unsigned int station_dist2) {
+    // fills array with all station distances between 2 given station distances
 
-    for (int i=0; i<HASHTAB_LEN; i++) { // scan entire hash table
-	search = hash_table[i]; // sets pointer to first object of hash table chain 
-	while (search != NULL) { // scan until end of chain
-	    if ((search->dist >= station_dist1 && search->dist <= station_dist2) || (search->dist <= station_dist1 && search->dist >= station_dist2)) { // station object is the start and end stations
-		(*station_count)++;
+    int count = 0; // counter containing total number of stations added in array
+    int idx = 0; // index of first available slot in array
+    Station *search; // used to search through hash table
 
-		SpecialStation *new_node = (SpecialStation *)malloc(sizeof(SpecialStation)); 
-
-		new_node->dist = search->dist;
-		new_node->maximum_autonomia = search->maximum_autonomia;
-		new_node->cost = UINT_MAX;
-		new_node->prev = NULL;
-		new_node->next = NULL;
-
-		if (head == NULL) { // double linked list is empty
-		    head = new_node;
-		}
-		else { // double linked list is not empty
-		    temp = head;
-		    while ((temp->dist < new_node->dist) && (temp->next != NULL)) { // we stop when either temp points to station with bigger dist value, or next node is NULL 
-			temp = temp->next;
-		    }
-		    if (temp->dist < new_node->dist) { // temp->next = NULL; need to insert new node to the right
-			new_node->prev = temp;
-			temp->next = new_node;
-		    }
-		    else { // temp->next != NULL; need to insert new node to the left
-			if (temp->prev == NULL) { // temp points to first node of linked list
-			    new_node->next = temp;
-			    temp->prev = new_node;
-			    head = new_node;
-			}
-			else { 
-			    new_node->next = temp;
-			    new_node->prev = temp->prev;
-			    temp->prev->next = new_node;
-			    temp->prev = new_node;
-			}
-		    }
-		}
+    for (int i=0; i<HASHTAB_LEN; i++) { // for each row in hash table 
+	search = hash_table[i];
+	while (search != NULL) {
+	    if (search->dist >= station_dist1 && search->dist <= station_dist2) { // station is within 2 stations
+		arr[idx] = search->dist; // add element to array
+		count++; 
+		idx++;
 	    }
-	    search = search->next;
+	    search = search->next; // go to next station object in chain
 	}
     }
-    return head;
+
+    return count;
 }
 
-void best_path(unsigned int *stack, int sp) {
-    // arguments are stack containing shortest path from end station to start station and stack pointer that points to next available slot
-    // function prints best path both on stdout and on stdout
+int compare_ascending(const void *x, const void *y) {
+    // used by qsort to order in ascending order
+    return *(int *)x - *(int *)y;
+}
+
+int compare_descending(const void *x, const void *y) {
+    // used by qsort to order in descending order
+    return *(int *)y - *(int *)x;
+}
+
+void queue_add(QueueNode **head, QueueNode **tail, TreeNode *node) {
+    // used in pianifica_forwards and pianifica_backwards functions
+    // adds node to back of queue
     
-    for (int i=sp-1; i>=0; i--) {
-	if (i == 0) {
-	    fprintf(stdout, "%d\n", stack[i]);
+    QueueNode *new = (QueueNode *)malloc(sizeof(QueueNode));
+    new->next = NULL;
+    new->node = node;
+    
+    if (*head == NULL) { // queue is empty
+	*head = new;
+	*tail = new;
+    }
+    else { // queue is not empty
+	(*tail)->next = new;
+	*tail = new;
+    }
+}
+
+TreeNode * queue_pop(QueueNode **head, QueueNode **tail) {
+    // used in pianifica_forwards and pianifica_backwards functions
+    // removes first element from queue and returns its address
+    
+    TreeNode *popped;
+    QueueNode *temp;
+
+    if (*head == NULL) return NULL; // queue is empty
+    else if (*head == *tail) { // queue contains one element 
+	popped = (*head)->node; // save address of TreeNode object to return
+	free(*head);
+	*head = *tail = NULL;
+	return popped;
+    }
+    else { // queue contains at least 2 elements
+	popped = (*head)->node;
+	temp = *head;
+	*head = (*head)->next;
+	free(temp);
+	return popped;
+    }
+}
+
+TreeNode * new_treenode(unsigned int dist) {
+    // creates new TreeNode object and returns its address
+
+    TreeNode *new = (TreeNode *)malloc(sizeof(TreeNode));
+
+    new->dist = dist;
+    new->child_count= 0;
+    new->father = NULL;
+    new->children_arr = NULL;
+
+    return new;
+}
+
+int mod_bin_search_forwards(unsigned int *arr, int count, unsigned int num) {
+    // modified binary search function called by pianifica_percorso_forwards
+    // returns index of array with biggest number smaller than num
+    // array will have at least 2 elements
+    
+    int start = 0;
+    int end = count-1;
+    int mid;
+
+    if (num >= arr[end]) return end;
+    while (end - start != 1) { // while we have not narrowed the search down to 2 elements
+	mid = (start+end)/2; // finds midpoint
+	if (num == arr[mid]) return mid;
+	else if (num > arr[mid]) start = mid;
+	else end = mid;
+    }
+
+    if (num == arr[start]) return start;
+    else if (num == arr[end]) return end;
+    else return start;
+}
+
+int mod_bin_search_backwards(unsigned int *arr, int count, unsigned int num) {
+    // modified binary search function called by pianifica_percorso_backwards
+    // returns index of array with smallest number bigger than num
+    // array will have at least 2 elements
+    
+    int start = 0;
+    int end = count-1;
+    int mid;
+
+    if (num <= arr[end]) return end;
+    while (end - start != 1) { // while we have not narrowed the search down to 2 elements
+	mid = (start+end)/2; // finds midpoint
+	if (num == arr[mid]) return mid;
+	else if (num < arr[mid]) start = mid;
+	else end = mid;
+    }
+
+    if (num == arr[start]) return start;
+    else if (num == arr[end]) return end;
+    else return start;
+
+}
+
+void free_tree(TreeNode *root) {
+    // takes root as parameter and frees entire tree structure; works recursively
+
+    if (root->child_count == 0) { // base case; we are at leaf
+	free(root);
+    }
+    else { // we are the root of a tree
+	for (int i=0; i<root->child_count; i++) { // calls itself on children
+	    free_tree(root->children_arr[i]);
 	}
-	else {
-	    fprintf(stdout, "%d ", stack[i]);
-	}
+	free(root->children_arr);
+	free(root);
+    }
+}
+
+void free_queue(QueueNode *head) {
+    // frees entire queue built by pianifica_percorso()
+    // takes queue head as parameter
+    
+    QueueNode *temp;
+    
+    while (head != NULL) {
+	temp = head;
+	head = head->next;
+	free(temp);
     }
 }
