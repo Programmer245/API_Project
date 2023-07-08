@@ -1,0 +1,804 @@
+desc: (none)
+cmd: ./shortest_path
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=112410076
+mem_heap_B=1330128
+mem_heap_extra_B=10224
+mem_stacks_B=0
+heap_tree=detailed
+n2: 1330128 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 1321936 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 1321936 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 9 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=2
+#-----------
+time=195994593
+mem_heap_B=2272888
+mem_heap_extra_B=17504
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=304905255
+mem_heap_B=3471568
+mem_heap_extra_B=60976
+mem_stacks_B=0
+heap_tree=detailed
+n3: 3471568 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 3402224 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 3402224 0x10928C: main (shortest_path.c:65)
+ n2: 36600 0x10A629: new_treenode (shortest_path.c:541)
+  n1: 36576 0x109E61: pianifica_forwards (shortest_path.c:327)
+   n1: 36576 0x109B52: pianifica_percorso (shortest_path.c:251)
+    n0: 36576 0x109327: main (shortest_path.c:77)
+  n0: 24 in 3 places, all below massif's threshold (1.00%)
+ n0: 32744 in 9 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=4
+#-----------
+time=389592217
+mem_heap_B=4361464
+mem_heap_extra_B=33632
+mem_stacks_B=0
+heap_tree=detailed
+n2: 4361464 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 4353272 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 4353272 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=5
+#-----------
+time=523982349
+mem_heap_B=5747632
+mem_heap_extra_B=44336
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=623406646
+mem_heap_B=6965968
+mem_heap_extra_B=53744
+mem_stacks_B=0
+heap_tree=detailed
+n2: 6965968 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 6957776 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 6957776 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=7
+#-----------
+time=760271032
+mem_heap_B=8383216
+mem_heap_extra_B=64688
+mem_stacks_B=0
+heap_tree=detailed
+n2: 8383216 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 8375024 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 8375024 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=8
+#-----------
+time=844268520
+mem_heap_B=9421288
+mem_heap_extra_B=72704
+mem_stacks_B=0
+heap_tree=detailed
+n2: 9421288 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 9413096 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 9413096 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=9
+#-----------
+time=970205274
+mem_heap_B=10873760
+mem_heap_extra_B=83920
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=1057292424
+mem_heap_B=11857960
+mem_heap_extra_B=91520
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=1137366329
+mem_heap_B=12910536
+mem_heap_extra_B=99648
+mem_stacks_B=0
+heap_tree=detailed
+n2: 12910536 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 12902344 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 12902344 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=12
+#-----------
+time=1245088615
+mem_heap_B=14106080
+mem_heap_extra_B=108880
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=1357125167
+mem_heap_B=15566840
+mem_heap_extra_B=120160
+mem_stacks_B=0
+heap_tree=detailed
+n2: 15566840 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 15558648 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 15558648 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=14
+#-----------
+time=1426334548
+mem_heap_B=16381136
+mem_heap_extra_B=126448
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=1505577909
+mem_heap_B=17255520
+mem_heap_extra_B=133200
+mem_stacks_B=0
+heap_tree=detailed
+n2: 17255520 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 17247328 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 17247328 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=16
+#-----------
+time=1578858439
+mem_heap_B=17984864
+mem_heap_extra_B=138832
+mem_stacks_B=0
+heap_tree=detailed
+n2: 17984864 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 17976672 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 17976672 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=17
+#-----------
+time=1673786987
+mem_heap_B=18923480
+mem_heap_extra_B=146080
+mem_stacks_B=0
+heap_tree=detailed
+n2: 18923480 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 18915288 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 18915288 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=18
+#-----------
+time=1808760988
+mem_heap_B=20326224
+mem_heap_extra_B=156912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=1918673299
+mem_heap_B=21820136
+mem_heap_extra_B=168448
+mem_stacks_B=0
+heap_tree=detailed
+n2: 21820136 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 21811944 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 21811944 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=20
+#-----------
+time=1997120779
+mem_heap_B=22677944
+mem_heap_extra_B=175072
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=2084170867
+mem_heap_B=23639352
+mem_heap_extra_B=182496
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=2190820112
+mem_heap_B=25131100
+mem_heap_extra_B=277068
+mem_stacks_B=0
+heap_tree=detailed
+n2: 25131100 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 24828776 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 24828776 0x10928C: main (shortest_path.c:65)
+ n0: 302324 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=23
+#-----------
+time=2302551201
+mem_heap_B=25993144
+mem_heap_extra_B=200672
+mem_stacks_B=0
+heap_tree=detailed
+n2: 25993144 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 25984952 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 25984952 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=24
+#-----------
+time=2427860402
+mem_heap_B=27091304
+mem_heap_extra_B=209152
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=2521122343
+mem_heap_B=27951184
+mem_heap_extra_B=215792
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=2602227725
+mem_heap_B=28958176
+mem_heap_extra_B=223568
+mem_stacks_B=0
+heap_tree=detailed
+n2: 28958176 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 28949984 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 28949984 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=27
+#-----------
+time=2711807361
+mem_heap_B=30383364
+mem_heap_extra_B=407340
+mem_stacks_B=0
+heap_tree=detailed
+n2: 30383364 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 29867880 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 29867880 0x10928C: main (shortest_path.c:65)
+ n0: 515484 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=28
+#-----------
+time=2832370877
+mem_heap_B=31162784
+mem_heap_extra_B=240592
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=2943405742
+mem_heap_B=32464000
+mem_heap_extra_B=250640
+mem_stacks_B=0
+heap_tree=detailed
+n2: 32464000 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 32455808 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 32455808 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=30
+#-----------
+time=3057555924
+mem_heap_B=33796296
+mem_heap_extra_B=260928
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=3118680953
+mem_heap_B=34482128
+mem_heap_extra_B=266224
+mem_stacks_B=0
+heap_tree=detailed
+n2: 34482128 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 34473936 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 34473936 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=32
+#-----------
+time=3216840673
+mem_heap_B=35659256
+mem_heap_extra_B=592008
+mem_stacks_B=0
+heap_tree=detailed
+n2: 35659256 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 35049952 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 35049952 0x10928C: main (shortest_path.c:65)
+ n0: 609304 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=33
+#-----------
+time=3360105286
+mem_heap_B=36721960
+mem_heap_extra_B=283520
+mem_stacks_B=0
+heap_tree=detailed
+n2: 36721960 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 36713768 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 36713768 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=34
+#-----------
+time=3457750325
+mem_heap_B=37360136
+mem_heap_extra_B=288448
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=3593733946
+mem_heap_B=38960084
+mem_heap_extra_B=473756
+mem_stacks_B=0
+heap_tree=detailed
+n2: 38960084 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 38607576 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 38607576 0x10928C: main (shortest_path.c:65)
+ n0: 352508 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=36
+#-----------
+time=3681697266
+mem_heap_B=39523304
+mem_heap_extra_B=305152
+mem_stacks_B=0
+heap_tree=detailed
+n2: 39523304 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 39515112 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 39515112 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=37
+#-----------
+time=3757792621
+mem_heap_B=40331384
+mem_heap_extra_B=311392
+mem_stacks_B=0
+heap_tree=detailed
+n2: 40331384 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 40323192 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 40323192 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=38
+#-----------
+time=3851590564
+mem_heap_B=41730956
+mem_heap_extra_B=654476
+mem_stacks_B=0
+heap_tree=detailed
+n2: 41730956 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 41081544 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 41081544 0x10928C: main (shortest_path.c:65)
+ n0: 649412 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=39
+#-----------
+time=3939642635
+mem_heap_B=42163032
+mem_heap_extra_B=325536
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=4006377664
+mem_heap_B=42919312
+mem_heap_extra_B=331376
+mem_stacks_B=0
+heap_tree=detailed
+n2: 42919312 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 42911120 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 42911120 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=41
+#-----------
+time=4141899248
+mem_heap_B=44771380
+mem_heap_extra_B=707716
+mem_stacks_B=0
+heap_tree=detailed
+n2: 44771380 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 44069368 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 44069368 0x10928C: main (shortest_path.c:65)
+ n0: 702012 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=42
+#-----------
+time=4229959498
+mem_heap_B=44958160
+mem_heap_extra_B=347120
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=4331952981
+mem_heap_B=46031456
+mem_heap_extra_B=355408
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=4418385591
+mem_heap_B=46592968
+mem_heap_extra_B=359744
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=4542014451
+mem_heap_B=47995712
+mem_heap_extra_B=370576
+mem_stacks_B=0
+heap_tree=detailed
+n2: 47995712 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 47987520 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 47987520 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=46
+#-----------
+time=4608174543
+mem_heap_B=49129576
+mem_heap_extra_B=774608
+mem_stacks_B=0
+heap_tree=detailed
+n2: 49129576 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 48360480 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 48360480 0x10928C: main (shortest_path.c:65)
+ n0: 769096 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=47
+#-----------
+time=4696294498
+mem_heap_B=49224408
+mem_heap_extra_B=380064
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=4764765497
+mem_heap_B=50024200
+mem_heap_extra_B=386240
+mem_stacks_B=0
+heap_tree=detailed
+n2: 50024200 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 50016008 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 50016008 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=49
+#-----------
+time=4809628305
+mem_heap_B=50409592
+mem_heap_extra_B=389216
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=4816276730
+mem_heap_B=50527696
+mem_heap_extra_B=390128
+mem_stacks_B=0
+heap_tree=detailed
+n2: 50527696 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 50519504 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 50519504 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=51
+#-----------
+time=4836685022
+mem_heap_B=51047716
+mem_heap_extra_B=459372
+mem_stacks_B=0
+heap_tree=detailed
+n2: 51047716 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 50679048 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 50679048 0x10928C: main (shortest_path.c:65)
+ n0: 368668 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=52
+#-----------
+time=4851835970
+mem_heap_B=51401876
+mem_heap_extra_B=636516
+mem_stacks_B=0
+heap_tree=detailed
+n2: 51401876 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 50679048 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 50679048 0x10928C: main (shortest_path.c:65)
+ n0: 722828 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=53
+#-----------
+time=4912970939
+mem_heap_B=51174160
+mem_heap_extra_B=395120
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=4974140023
+mem_heap_B=51847560
+mem_heap_extra_B=400320
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=5006858700
+mem_heap_B=52329368
+mem_heap_extra_B=402656
+mem_stacks_B=0
+heap_tree=detailed
+n2: 52329368 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 52137736 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 52137736 0x10928C: main (shortest_path.c:65)
+ n0: 191632 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=56
+#-----------
+time=5013674637
+mem_heap_B=52824564
+mem_heap_extra_B=608932
+mem_stacks_B=0
+heap_tree=detailed
+n2: 52824564 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 52137736 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 52137736 0x10928C: main (shortest_path.c:65)
+ n0: 686828 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=57
+#-----------
+time=5075233776
+mem_heap_B=52479520
+mem_heap_extra_B=405200
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=58
+#-----------
+time=5131686170
+mem_heap_B=53306772
+mem_heap_extra_B=662164
+mem_stacks_B=0
+heap_tree=detailed
+n2: 53306772 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 52804920 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 52804920 0x10928C: main (shortest_path.c:65)
+ n0: 501852 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=59
+#-----------
+time=5192811653
+mem_heap_B=53466584
+mem_heap_extra_B=484040
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=60
+#-----------
+time=5211526893
+mem_heap_B=53799032
+mem_heap_extra_B=709984
+mem_stacks_B=0
+heap_tree=detailed
+n2: 53799032 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 53225536 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 53225536 0x10928C: main (shortest_path.c:65)
+ n0: 573496 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=61
+#-----------
+time=5218051305
+mem_heap_B=54196400
+mem_heap_extra_B=880144
+mem_stacks_B=0
+heap_tree=detailed
+n2: 54196400 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 53225536 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 53225536 0x10928C: main (shortest_path.c:65)
+ n0: 970864 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=62
+#-----------
+time=5279222340
+mem_heap_B=53892624
+mem_heap_extra_B=416112
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=5340384591
+mem_heap_B=54495576
+mem_heap_extra_B=420768
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=64
+#-----------
+time=5370349918
+mem_heap_B=54980980
+mem_heap_extra_B=646468
+mem_stacks_B=0
+heap_tree=detailed
+n2: 54980980 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 54512248 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 54512248 0x10928C: main (shortest_path.c:65)
+ n0: 468732 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=65
+#-----------
+time=5378696054
+mem_heap_B=55340612
+mem_heap_extra_B=843388
+mem_stacks_B=0
+heap_tree=detailed
+n2: 55340612 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 54512248 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 54512248 0x10928C: main (shortest_path.c:65)
+ n0: 828364 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=66
+#-----------
+time=5439824318
+mem_heap_B=55166904
+mem_heap_extra_B=425952
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=67
+#-----------
+time=5503532829
+mem_heap_B=55979228
+mem_heap_extra_B=431412
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=68
+#-----------
+time=5504065952
+mem_heap_B=56265780
+mem_heap_extra_B=484332
+mem_stacks_B=0
+heap_tree=detailed
+n2: 56265780 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 55863192 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 55863192 0x10928C: main (shortest_path.c:65)
+ n0: 402588 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=69
+#-----------
+time=5518989485
+mem_heap_B=56662116
+mem_heap_extra_B=682628
+mem_stacks_B=0
+heap_tree=detailed
+n2: 56662116 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 55863192 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 55863192 0x10928C: main (shortest_path.c:65)
+ n0: 798924 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=70
+#-----------
+time=5580228400
+mem_heap_B=56327224
+mem_heap_extra_B=434912
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=71
+#-----------
+time=5641366301
+mem_heap_B=56942608
+mem_heap_extra_B=439664
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=72
+#-----------
+time=5689437476
+mem_heap_B=57483400
+mem_heap_extra_B=443840
+mem_stacks_B=0
+heap_tree=detailed
+n2: 57483400 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57475208 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 57475208 0x10928C: main (shortest_path.c:65)
+ n0: 8192 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=73
+#-----------
+time=5743241603
+mem_heap_B=58186128
+mem_heap_extra_B=447704
+mem_stacks_B=0
+heap_tree=detailed
+n2: 58186128 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57972488 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 57972488 0x10928C: main (shortest_path.c:65)
+ n0: 213640 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=74
+#-----------
+time=5765820909
+mem_heap_B=58506300
+mem_heap_extra_B=713884
+mem_stacks_B=0
+heap_tree=detailed
+n2: 58506300 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57972488 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 57972488 0x10928C: main (shortest_path.c:65)
+ n0: 533812 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=75
+#-----------
+time=5775137380
+mem_heap_B=58885052
+mem_heap_extra_B=927524
+mem_stacks_B=0
+heap_tree=peak
+n2: 58885052 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 57972488 0x10942A: aggiungi_stazione (shortest_path.c:102)
+  n0: 57972488 0x10928C: main (shortest_path.c:65)
+ n0: 912564 in 11 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=76
+#-----------
+time=5836264064
+mem_heap_B=59071544
+mem_heap_extra_B=655696
+mem_stacks_B=0
+heap_tree=empty

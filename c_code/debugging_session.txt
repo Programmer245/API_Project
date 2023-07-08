@@ -1,0 +1,305 @@
+anto@anto-ThinkPad-X220:~/Desktop/API_Project/API_Project_Repo/c_code$ ls
+archivio_test_aperti  callgrind.out.54461  callgrind.out.6174  extra_test_cases  massif.out.6278  massif.out.69894  out_text.txt  shortest_path  shortest_path.c  verifier  verifier.c
+anto@anto-ThinkPad-X220:~/Desktop/API_Project/API_Project_Repo/c_code$ gcc -g shortest_path.c -o shortest_path
+anto@anto-ThinkPad-X220:~/Desktop/API_Project/API_Project_Repo/c_code$ gdb shortest_path 
+GNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from shortest_path...
+(gdb) break 374
+Breakpoint 1 at 0x2077: file shortest_path.c, line 374.
+(gdb) run < archivio_test_aperti/open_3.txt
+Starting program: /home/anto/Desktop/API_Project/API_Project_Repo/c_code/shortest_path < archivio_test_aperti/open_3.txt
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+
+Breakpoint 1, pianifica_backwards (station_dist1=296, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+(gdb) continue
+Continuing.
+nessun percorso
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+non rottamata
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+aggiunta
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+(gdb) display *distances@count
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+(gdb) display curr->dist
+2: curr->dist = 263
+(gdb) display max_reach 
+3: max_reach = 237
+(gdb) display furthest_idx 
+4: furthest_idx = 2
+(gdb) display lim_idx 
+5: lim_idx = 0
+(gdb) continue
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 249
+3: max_reach = 223
+4: furthest_idx = 5
+5: lim_idx = 2
+(gdb) continue
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 258
+3: max_reach = 232
+4: furthest_idx = 3
+5: lim_idx = 5
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 226
+3: max_reach = 209
+4: furthest_idx = 7
+5: lim_idx = 5
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 230
+3: max_reach = 212
+4: furthest_idx = 7
+5: lim_idx = 7
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 235
+3: max_reach = 215
+4: furthest_idx = 7
+5: lim_idx = 7
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 216
+3: max_reach = 198
+4: furthest_idx = 8
+5: lim_idx = 7
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 221
+3: max_reach = 204
+4: furthest_idx = 7
+5: lim_idx = 8
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 198
+3: max_reach = 178
+4: furthest_idx = 11
+5: lim_idx = 8
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 179
+3: max_reach = 156
+4: furthest_idx = 13
+5: lim_idx = 11
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 181
+3: max_reach = 157
+4: furthest_idx = 13
+5: lim_idx = 13
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 188
+3: max_reach = 165
+4: furthest_idx = 12
+5: lim_idx = 13
+(gdb) continue
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 161
+3: max_reach = 117
+4: furthest_idx = 14
+5: lim_idx = 13
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 165
+3: max_reach = 139
+4: furthest_idx = 13
+5: lim_idx = 14
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 117
+3: max_reach = 73
+4: furthest_idx = 17
+5: lim_idx = 14
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 84
+3: max_reach = 63
+4: furthest_idx = 18
+5: lim_idx = 17
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 95
+3: max_reach = 77
+4: furthest_idx = 17
+5: lim_idx = 18
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 113
+3: max_reach = 94
+4: furthest_idx = 16
+5: lim_idx = 18
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 63
+3: max_reach = 42
+4: furthest_idx = 19
+5: lim_idx = 18
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 62
+3: max_reach = 12
+4: furthest_idx = 20
+5: lim_idx = 19
+(gdb) 
+Continuing.
+
+Breakpoint 1, pianifica_backwards (station_dist1=263, station_dist2=5) at shortest_path.c:374
+374		if (furthest_idx == count-1) { // found shortest path to destination station
+1: *distances@count = {263, 258, 249, 235, 230, 226, 221, 216, 198, 188, 181, 179, 165, 161, 117, 113, 95, 84, 63, 62, 12, 5}
+2: curr->dist = 12
+3: max_reach = 0
+4: furthest_idx = 21
+5: lim_idx = 20
+(gdb) 
+Continuing.
+263 249 226 216 198 179 161 117 84 63 62 12 5
+[Inferior 1 (process 3415) exited normally]
+(gdb) quit
+anto@anto-ThinkPad-X220:~/Desktop/API_Project/API_Project_Repo/c_code$ 

@@ -43,6 +43,7 @@ int hash_func(int);
 int fill_stations_array(unsigned int *, unsigned int, unsigned int); 
 int compare_ascending(const void *, const void *);
 int compare_descending(const void *, const void *);
+int compare_ascending_level(const void *, const void *);
 void queue_add(QueueNode **, QueueNode **, TreeNode *);
 TreeNode * queue_pop(QueueNode **, QueueNode **);
 TreeNode * new_treenode(unsigned int);
@@ -343,6 +344,7 @@ void pianifica_forwards(unsigned int station_dist1, unsigned int station_dist2) 
 
 void pianifica_backwards(unsigned int station_dist1, unsigned int station_dist2) {
     // called by pianifica_percorso when starting station is further away from road start than destination station
+    // execution cost slightly more expensive than pianifica_forwards
     
     unsigned int *distances = (unsigned int *)malloc(sizeof(unsigned int)*station_count); // create array to hold all station distances
     int count = fill_stations_array(distances, station_dist2, station_dist1); // populate array
@@ -360,8 +362,23 @@ void pianifica_backwards(unsigned int station_dist1, unsigned int station_dist2)
     unsigned int max_reach; // stores maximum distance reachable from station
     int furthest_idx; // stores the index of the biggest element smaller than max_reach in distances array
     int lim_idx = 0; // stores the index of the element with biggest dist parameter in tree
-    while (queue_head != NULL) { // while the queue is full
+
+    TreeNode **level_buffer = (TreeNode **)malloc(sizeof(TreeNode *)*count); // holds addresses of all nodes on the same level being analyzed 
+    int buffer_sp = 0; // stack pointer of level_buffer array 
+    while (1) { // INFINITE LOOP; MAY CAUSE FREEZING IF HANDLED INCORRECTLY
 	curr = queue_pop(&queue_head, &queue_tail);
+
+	if (curr == NULL) { // queue was empty; either we have finished analyzing a level or we have finished analyzing entire path
+	    if (buffer_sp == 0) break; // we have analyzed all nodes
+	    else { // we must analyze next level
+		qsort(level_buffer, buffer_sp, sizeof(TreeNode *), compare_ascending_level); // orders array of node addresses in descending order such that when queued, they will be in ascending order
+		for (int i=0; i<buffer_sp; i++) { // enqueue nodes of next level in ascending order
+		    queue_add(&queue_head, &queue_tail, level_buffer[i]);
+		}
+		buffer_sp = 0; // empty level_buffer
+		continue;
+	    }
+	}
 
 	search = hash_table[hash_func(curr->dist)]; 
 	while (search->dist != curr->dist) { // find station object in hash table
@@ -396,6 +413,7 @@ void pianifica_backwards(unsigned int station_dist1, unsigned int station_dist2)
 	    }
 
 	    free(distances);
+	    free(level_buffer);
 	    free(stack);
 	    free_tree(root);
 	    free_queue(queue_head);
@@ -414,7 +432,9 @@ void pianifica_backwards(unsigned int station_dist1, unsigned int station_dist2)
 		child->father = curr;
 
 		curr->children_arr[i-lim_idx-1] = child; // add child node to father node array
-		queue_add(&queue_head, &queue_tail, child); // add child node to queue
+
+		level_buffer[buffer_sp] = child; // add child address to level_buffer
+		buffer_sp++;
 	    }
 
 	    lim_idx = furthest_idx;
@@ -423,6 +443,7 @@ void pianifica_backwards(unsigned int station_dist1, unsigned int station_dist2)
     // there is no path between the 2 selected stations
 
     free(distances);
+    free(level_buffer);
     free_tree(root);
 
     fprintf(stdout, "nessun percorso\n");
@@ -466,6 +487,11 @@ int compare_ascending(const void *x, const void *y) {
 int compare_descending(const void *x, const void *y) {
     // used by qsort to order in descending order
     return *(int *)y - *(int *)x;
+}
+
+int compare_ascending_level(const void *x, const void *y) {
+    // used by qsoft to order in ascending order nodes in pianifica_backwards function
+    return (*(TreeNode **)x)->dist - (*(TreeNode **)y)->dist;
 }
 
 void queue_add(QueueNode **head, QueueNode **tail, TreeNode *node) {
