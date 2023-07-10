@@ -51,6 +51,7 @@ int mod_bin_search_forwards(unsigned int *, int, unsigned int);
 int mod_bin_search_backwards(unsigned int *, int, unsigned int);
 void free_tree(TreeNode *);
 void free_queue(QueueNode *);
+void fscanf_unlocked(unsigned int *);
 
 int station_count = 0; // keeps count of number of stations in hash_table
 Station *hash_table[HASHTAB_LEN] = {NULL}; // creates the hash table initialized with null pointers; open hashing
@@ -84,7 +85,7 @@ void aggiungi_stazione() {
     // this function is called after main function reads corresponding command; this function continues reading the rest of the instruction
     
     unsigned int station_dist; 
-    fscanf_ret = fscanf(stdin, "%d", &station_dist);
+    fscanf_unlocked(&station_dist);
 
     Station *search; // used to check if station is already in hash table
     search = hash_table[hash_func(station_dist)]; 
@@ -108,10 +109,10 @@ void aggiungi_stazione() {
 
     unsigned int car_autonomia;
     unsigned int car_count;
-    fscanf_ret = fscanf(stdin, "%d", &car_count);
+    fscanf_unlocked(&car_count);
 
     for (unsigned int i=0; i<car_count; i++) { // adds all the cars to the station struct object
-        fscanf_ret = fscanf(stdin, "%d", &car_autonomia); // read car autonomia and save it into variable
+	fscanf_unlocked(&car_autonomia); // read car autonomia and save it into variable
         if (car_autonomia > new_station->maximum_autonomia) { // if the car has the highest autonomia yet, maximum autonomia is updated
             new_station->maximum_autonomia = car_autonomia;
         } 
@@ -132,7 +133,7 @@ void demolisci_stazione() {
     // checks if station is in hash map and deletes it by deallocating memory from heap
 
     unsigned int station_dist; 
-    fscanf_ret = fscanf(stdin, "%d", &station_dist);
+    fscanf_unlocked(&station_dist);
 
     Station *search; // used to check if station is in hash table
     search = hash_table[hash_func(station_dist)]; 
@@ -175,7 +176,8 @@ void aggiungi_auto() {
     // searches hash table for station object, and if found adds car to station car stack
    
     unsigned int station_dist, car_autonomia; 
-    fscanf_ret = fscanf(stdin, "%d %d", &station_dist, &car_autonomia);
+    fscanf_unlocked(&station_dist);
+    fscanf_unlocked(&car_autonomia);
 
     Station *search;
     search = hash_table[hash_func(station_dist)]; 
@@ -203,7 +205,8 @@ void rottama_auto() {
     // searches hash table for station object, and if found removes car from station car stack
 
     unsigned int station_dist, car_autonomia; 
-    fscanf_ret = fscanf(stdin, "%d %d", &station_dist, &car_autonomia);
+    fscanf_unlocked(&station_dist);
+    fscanf_unlocked(&car_autonomia);
 
     Station *search;
     search = hash_table[hash_func(station_dist)]; 
@@ -245,7 +248,8 @@ void rottama_auto() {
 
 void pianifica_percorso() {
     unsigned int station_dist1, station_dist2; 
-    fscanf_ret = fscanf(stdin, "%d %d", &station_dist1, &station_dist2);
+    fscanf_unlocked(&station_dist1);
+    fscanf_unlocked(&station_dist2);
 
     if (station_dist1 < station_dist2) {
 	pianifica_forwards(station_dist1, station_dist2);
@@ -618,5 +622,22 @@ void free_queue(QueueNode *head) {
 	temp = head;
 	head = head->next;
 	free(temp);
+    }
+}
+
+void fscanf_unlocked(unsigned int *num) {
+    // faster fscanf using getc_unlocked for reading a number from stdin
+    
+    *num = 0; // initializes number to 0
+   
+    char c;
+    
+    c = getchar_unlocked();
+    while (c < '0' || c > '9') {
+	c = getchar_unlocked();
+    }
+    while (c >= '0' && c <= '9') {
+	*num = ((*num)<<3) + ((*num)<<1) + c - '0';
+	c = getchar_unlocked();
     }
 }
